@@ -1,0 +1,2204 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mật Mã Giải Cứu Cổ Mộ - Toán Học Lớp 6</title>
+    <meta name="description" content="Trò chơi toán học Ai Cập cổ đại thử thách kiến thức dấu hiệu chia hết cho 2, 5, 3, 9, 11 và 13 dành cho học sinh lớp 6." />
+    <meta property="og:title" content="Mật Mã Giải Cứu Cổ Mộ" />
+    <meta property="og:description" content="Trò chơi toán học tương tác vượt 4 ải cổ mộ Ai Cập chinh phục các dấu hiệu chia hết cho 2, 5, 3, 9, 11 và 13 dành cho học sinh lớp 6." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts for Ancient Egyptian & Flawless Vietnamese Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+      :root {
+        --gold-primary: #D4AF37;
+        --gold-light: #FCE881;
+        --gold-dark: #997A15;
+        --sand-bg: #2C1810;
+        --stone-dark: #14110E;
+        --stone-border: #4A3525;
+        --stone-slab: #241D17;
+        --text-gold: #F5E6BE;
+        --cyan-egypt: #00E5FF;
+        --green-emerald: #10B981;
+        --red-ruby: #EF4444;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #0d0b09;
+        color: var(--text-gold);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: hidden;
+        position: relative;
+        background-image: 
+          radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+          radial-gradient(circle at 10% 80%, rgba(180, 83, 9, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 90% 80%, rgba(180, 83, 9, 0.15) 0%, transparent 50%),
+          linear-gradient(180deg, #16120e 0%, #0c0a08 100%);
+      }
+
+      /* Egyptian Hieroglyph Background Accent */
+      .bg-hieroglyphs {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.04;
+        background-image: radial-gradient(#D4AF37 1px, transparent 1px);
+        background-size: 24px 24px;
+        z-index: 0;
+      }
+
+      /* Container */
+      .game-container {
+        width: 100%;
+        max-width: 960px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 12px 16px 24px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Top Header */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        margin-bottom: 12px;
+        background: rgba(36, 29, 23, 0.85);
+        border: 1px solid var(--stone-border);
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .title-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .pyramid-logo {
+        width: 36px;
+        height: 36px;
+        fill: var(--gold-primary);
+        filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+      }
+
+      h1 {
+        font-family: 'Cinzel Decorative', 'Cinzel', serif;
+        font-size: 1.15rem;
+        letter-spacing: 1px;
+        color: var(--gold-light);
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+      }
+
+      .subtitle {
+        font-size: 0.75rem;
+        color: #C5A059;
+        font-weight: 500;
+      }
+
+      .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .icon-btn {
+        background: #34261B;
+        border: 1px solid var(--gold-dark);
+        color: var(--gold-light);
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .icon-btn:hover {
+        background: #4A3525;
+        border-color: var(--gold-primary);
+        transform: translateY(-1px);
+        box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+      }
+
+      /* HUD Status Bar */
+      .hud-bar {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 12px;
+        align-items: center;
+        background: linear-gradient(180deg, #2b2119 0%, #1c1510 100%);
+        border: 1.5px solid var(--gold-dark);
+        border-radius: 12px;
+        padding: 10px 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      }
+
+      .hud-left, .hud-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .hud-right {
+        justify-content: flex-end;
+      }
+
+      .hud-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hearts-container {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .hearts-row {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .lives-label {
+        font-family: 'Cinzel', serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--gold-light);
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+      }
+
+      .heart-icon {
+        width: 26px;
+        height: 26px;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease, fill 0.3s ease;
+      }
+
+      .heart-icon.alive {
+        fill: #EF4444 !important;
+        stroke: #F87171 !important;
+        stroke-width: 0.5px;
+        filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.8));
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .heart-icon.broken {
+        fill: #221812 !important;
+        stroke: #664E3A !important;
+        stroke-width: 1.5px;
+        stroke-dasharray: 2 1.5;
+        filter: grayscale(1);
+        transform: scale(0.82);
+        opacity: 0.35;
+        animation: heartCrack 0.5s ease;
+      }
+
+      @keyframes heartCrack {
+        0% { transform: scale(1.3) rotate(0deg); fill: #EF4444; }
+        50% { transform: scale(1.1) rotate(15deg); fill: #991B1B; }
+        100% { transform: scale(0.82) rotate(-10deg); fill: #221812; }
+      }
+
+      .score-box {
+        font-family: 'Cinzel', serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--gold-light);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1px solid #4A3525;
+      }
+
+      .score-box svg {
+        fill: var(--gold-primary);
+      }
+
+      /* Timer Bar */
+      .timer-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .timer-display {
+        font-family: 'Cinzel', serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--gold-primary);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .timer-bar-bg {
+        width: 140px;
+        height: 8px;
+        background: #18120c;
+        border: 1px solid #4A3525;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .timer-bar-fill {
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(90deg, #D4AF37, #10B981);
+        border-radius: 999px;
+        transition: width 1s linear, background-color 0.5s ease;
+      }
+
+      .timer-warning .timer-bar-fill {
+        background: linear-gradient(90deg, #EF4444, #F59E0B);
+        animation: pulseWarning 0.8s infinite alternate;
+      }
+
+      .timer-warning .timer-display {
+        color: #EF4444;
+        animation: pulseWarning 0.8s infinite alternate;
+      }
+
+      @keyframes pulseWarning {
+        from { opacity: 0.7; transform: scale(0.98); }
+        to { opacity: 1; transform: scale(1.04); }
+      }
+
+      /* 4 Stages Progress Bar */
+      .stages-nav {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .stage-card {
+        background: rgba(36, 29, 23, 0.7);
+        border: 1.5px solid #3E2B1E;
+        border-radius: 10px;
+        padding: 8px 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .stage-card.active {
+        background: linear-gradient(180deg, #3E2B1E 0%, #261A12 100%);
+        border-color: var(--gold-primary);
+        box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+      }
+
+      .stage-card.completed {
+        border-color: #059669;
+        background: rgba(6, 78, 59, 0.25);
+      }
+
+      .stage-title {
+        font-family: 'Cinzel', serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #C5A059;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+      }
+
+      .stage-card.active .stage-title {
+        color: var(--gold-light);
+      }
+
+      .stage-card.completed .stage-title {
+        color: #34D399;
+      }
+
+      /* Pins / Mechanism Lock Indicators */
+      .locks-row {
+        display: flex;
+        gap: 4px;
+        margin-top: 2px;
+      }
+
+      .lock-pin {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #3A2E24;
+        border: 1px solid #5A4738;
+        transition: all 0.3s ease;
+      }
+
+      .lock-pin.unlocked {
+        background: #10B981;
+        border-color: #34D399;
+        box-shadow: 0 0 6px #10B981;
+      }
+
+      .lock-pin.current {
+        background: var(--gold-primary);
+        border-color: var(--gold-light);
+        box-shadow: 0 0 6px var(--gold-primary);
+        animation: currentPinPulse 1s infinite alternate;
+      }
+
+      @keyframes currentPinPulse {
+        from { transform: scale(0.9); opacity: 0.8; }
+        to { transform: scale(1.25); opacity: 1; }
+      }
+
+      /* Ancient Tomb Portal & Stone Gate */
+      .tomb-portal {
+        background: radial-gradient(circle at 50% 30%, #2a2018 0%, #15100c 90%);
+        border: 2px solid var(--gold-dark);
+        border-radius: 16px;
+        padding: 18px 16px;
+        position: relative;
+        box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 8px 30px rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 12px;
+      }
+
+      /* Torches on sides */
+      .torch-wrapper {
+        position: absolute;
+        top: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        pointer-events: none;
+      }
+
+      .torch-left { left: 16px; }
+      .torch-right { right: 16px; }
+
+      .torch-flame {
+        width: 18px;
+        height: 28px;
+        background: radial-gradient(circle at 50% 80%, #FFF 0%, #F59E0B 40%, #DC2626 80%, transparent 100%);
+        border-radius: 50% 50% 20% 20% / 80% 80% 20% 20%;
+        filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.8));
+        animation: flicker 0.15s infinite alternate;
+      }
+
+      .torch-stand {
+        width: 10px;
+        height: 28px;
+        background: #3B2A1D;
+        border: 1px solid #1C130D;
+        border-radius: 2px;
+      }
+
+      @keyframes flicker {
+        0% { transform: scale(1) translate(0, 0) rotate(-1deg); opacity: 0.9; }
+        50% { transform: scale(1.08, 0.95) translate(1px, -1px) rotate(1deg); opacity: 1; }
+        100% { transform: scale(0.96, 1.04) translate(-1px, 0) rotate(0deg); opacity: 0.85; }
+      }
+
+      /* Stone Door Frame & Hieroglyphic Lintels */
+      .portal-header {
+        text-align: center;
+        margin-bottom: 16px;
+        position: relative;
+        padding-bottom: 12px;
+        border-bottom: 1px dashed #4A3525;
+      }
+
+      .hieroglyphic-line {
+        font-size: 0.9rem;
+        letter-spacing: 6px;
+        color: #8C6D46;
+        margin-bottom: 4px;
+      }
+
+      .stage-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'Cinzel', serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--gold-light);
+        background: linear-gradient(90deg, transparent, #4A3525, transparent);
+        padding: 4px 16px;
+        border-radius: 999px;
+      }
+
+      /* Stone Door Element with Shake / Quake Animation */
+      .stone-door {
+        background: #1F1914;
+        border: 2px solid #5A4331;
+        border-radius: 12px;
+        padding: 18px 16px;
+        position: relative;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      .quake-door {
+        animation: doorRumble 0.6s cubic-bezier(.36,.07,.19,.97) both;
+      }
+
+      @keyframes doorRumble {
+        10%, 90% { transform: translate3d(-2px, 1px, 0); }
+        20%, 80% { transform: translate3d(3px, -2px, 0); }
+        30%, 50%, 70% { transform: translate3d(-4px, 2px, 0); }
+        40%, 60% { transform: translate3d(4px, -1px, 0); }
+      }
+
+      .glow-green {
+        border-color: #10B981 !important;
+        box-shadow: 0 0 25px rgba(16, 185, 129, 0.5), inset 0 0 15px rgba(16, 185, 129, 0.2) !important;
+      }
+
+      .glow-red {
+        border-color: #EF4444 !important;
+        box-shadow: 0 0 25px rgba(239, 68, 68, 0.5), inset 0 0 15px rgba(239, 68, 68, 0.2) !important;
+      }
+
+      /* Question Tablet */
+      .question-box {
+        text-align: center;
+        margin-bottom: 18px;
+      }
+
+      .question-num {
+        font-family: 'Cinzel', serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--gold-primary);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .question-text {
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #FFF3DA;
+        font-weight: 600;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      }
+
+      /* Math typography helper: Overline for multi-digit numbers like \overline{37x} */
+      .overline {
+        text-decoration: overline;
+        font-weight: 700;
+        letter-spacing: 1px;
+        padding: 0 2px;
+      }
+
+      .math-sym {
+        font-family: serif;
+        font-style: italic;
+        padding: 0 2px;
+      }
+
+      /* Answer Options Grid */
+      .options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      @media (max-width: 640px) {
+        .options-grid {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        .hud-bar {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .hud-center {
+          grid-column: span 2;
+          order: 3;
+        }
+        .stage-title {
+          font-size: 0.65rem;
+        }
+      }
+
+      .option-btn {
+        background: linear-gradient(180deg, #2D231B 0%, #201812 100%);
+        border: 1.5px solid #5A4331;
+        border-radius: 10px;
+        padding: 14px 16px;
+        color: #F5E6BE;
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .option-btn:hover:not(:disabled) {
+        background: linear-gradient(180deg, #3D2F24 0%, #291F17 100%);
+        border-color: var(--gold-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+      }
+
+      .option-btn:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      .opt-letter {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        border-radius: 6px;
+        background: #18120D;
+        border: 1px solid var(--gold-dark);
+        color: var(--gold-light);
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .option-btn:hover:not(:disabled) .opt-letter {
+        border-color: var(--gold-primary);
+        background: #2C1810;
+        box-shadow: 0 0 6px rgba(212, 175, 55, 0.5);
+      }
+
+      .opt-content {
+        flex: 1;
+        line-height: 1.4;
+      }
+
+      /* Option States */
+      .option-btn.correct {
+        background: linear-gradient(180deg, #065F46 0%, #064E3B 100%) !important;
+        border-color: #34D399 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.6) !important;
+      }
+      .option-btn.correct .opt-letter {
+        background: #047857;
+        border-color: #A7F3D0;
+        color: #FFFFFF;
+      }
+
+      .option-btn.wrong {
+        background: linear-gradient(180deg, #991B1B 0%, #7F1D1D 100%) !important;
+        border-color: #F87171 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.6) !important;
+        animation: optShake 0.4s ease;
+      }
+      .option-btn.wrong .opt-letter {
+        background: #B91C1C;
+        border-color: #FECACA;
+        color: #FFFFFF;
+      }
+
+      .option-btn.eliminated {
+        opacity: 0.25;
+        filter: grayscale(1);
+        pointer-events: none;
+        text-decoration: line-through;
+        border-color: #33271e;
+      }
+
+      @keyframes optShake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+      }
+
+      /* Explanation / Feedback Banner */
+      .feedback-banner {
+        margin-top: 14px;
+        padding: 12px 16px;
+        border-radius: 10px;
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .feedback-banner.success {
+        background: rgba(6, 78, 59, 0.4);
+        border: 1.5px solid #10B981;
+      }
+
+      .feedback-banner.danger {
+        background: rgba(127, 29, 29, 0.4);
+        border: 1.5px solid #EF4444;
+      }
+
+      .feedback-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+      }
+
+      .feedback-title {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .feedback-banner.success .feedback-title { color: #34D399; }
+      .feedback-banner.danger .feedback-title { color: #F87171; }
+
+      .feedback-text {
+        font-size: 0.92rem;
+        line-height: 1.5;
+        color: #E5E7EB;
+      }
+
+      .continue-btn {
+        margin-top: 10px;
+        background: linear-gradient(180deg, #D4AF37 0%, #997A15 100%);
+        border: 1px solid #FCE881;
+        border-radius: 8px;
+        color: #1F150B;
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        padding: 8px 18px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      .continue-btn:hover {
+        background: linear-gradient(180deg, #E5C158 0%, #AA8717 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+      }
+
+      /* Amulet Power Buttons (Bùa Hộ Mệnh) */
+      .amulets-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        margin-top: 14px;
+      }
+
+      .amulet-btn {
+        background: linear-gradient(180deg, #2D221A 0%, #1A130D 100%);
+        border: 1.5px solid var(--gold-dark);
+        border-radius: 12px;
+        padding: 8px 14px;
+        color: var(--gold-light);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      }
+
+      .amulet-btn:hover:not(:disabled) {
+        border-color: var(--gold-primary);
+        background: #3A2B20;
+        transform: translateY(-2px);
+        box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+      }
+
+      .amulet-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        filter: grayscale(1);
+      }
+
+      .amulet-badge {
+        background: #140E0A;
+        border: 1px solid var(--gold-dark);
+        color: var(--gold-primary);
+        font-family: 'Cinzel', serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 999px;
+      }
+
+      .amulet-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      /* Modals (Papyrus Scroll, Story Intro, Game Over, Victory) */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(6px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+        z-index: 100;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* Papyrus Ancient Scroll Design */
+      .papyrus-scroll {
+        background: #F4ECC2;
+        color: #2D1E10;
+        border: 8px solid #C89D42;
+        border-radius: 12px;
+        padding: 24px;
+        max-width: 600px;
+        width: 100%;
+        max-height: 85vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(184, 134, 11, 0.3);
+        background-image: 
+          radial-gradient(circle at 10% 20%, rgba(139, 69, 19, 0.08) 0%, transparent 40%),
+          radial-gradient(circle at 90% 80%, rgba(139, 69, 19, 0.08) 0%, transparent 40%);
+      }
+
+      .scroll-header {
+        text-align: center;
+        border-bottom: 2px dashed #B08838;
+        padding-bottom: 12px;
+        margin-bottom: 16px;
+      }
+
+      .scroll-title {
+        font-family: 'Cinzel Decorative', 'Cinzel', serif;
+        font-size: 1.3rem;
+        color: #7B3F00;
+        margin-bottom: 4px;
+      }
+
+      .scroll-body {
+        font-size: 0.95rem;
+        line-height: 1.65;
+        color: #3A2312;
+      }
+
+      .rule-item {
+        background: rgba(200, 157, 66, 0.15);
+        border-left: 4px solid #8B5A2B;
+        padding: 10px 14px;
+        margin-bottom: 10px;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .rule-title {
+        font-weight: 700;
+        color: #7A3E1D;
+        margin-bottom: 4px;
+      }
+
+      .modal-close-btn {
+        display: block;
+        margin: 18px auto 0;
+        background: #7B3F00;
+        border: 2px solid #C89D42;
+        color: #FFF;
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        padding: 8px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .modal-close-btn:hover {
+        background: #964B00;
+        box-shadow: 0 0 10px rgba(123, 63, 0, 0.5);
+      }
+
+      /* End Game Modals */
+      .endgame-card {
+        background: linear-gradient(180deg, #241A13 0%, #130D09 100%);
+        border: 2px solid var(--gold-primary);
+        border-radius: 16px;
+        padding: 28px 24px;
+        max-width: 520px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 0 40px rgba(212, 175, 55, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.8);
+      }
+
+      .endgame-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 16px;
+      }
+
+      .victory-title {
+        font-family: 'Cinzel Decorative', 'Cinzel', serif;
+        font-size: 1.5rem;
+        color: var(--gold-light);
+        margin-bottom: 8px;
+        text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+      }
+
+      .defeat-title {
+        font-family: 'Cinzel Decorative', 'Cinzel', serif;
+        font-size: 1.5rem;
+        color: #EF4444;
+        margin-bottom: 8px;
+        text-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+      }
+
+      .endgame-desc {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #E2D9C8;
+        margin-bottom: 20px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid #4A3525;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 20px;
+      }
+
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .stat-val {
+        font-family: 'Cinzel', serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--gold-light);
+      }
+
+      .stat-label {
+        font-size: 0.72rem;
+        color: #A89582;
+        margin-top: 2px;
+      }
+
+      .action-btn-large {
+        background: linear-gradient(180deg, #D4AF37 0%, #997A15 100%);
+        border: 2px solid #FCE881;
+        border-radius: 10px;
+        color: #1F150B;
+        font-family: 'Cinzel', serif;
+        font-weight: 800;
+        font-size: 1.05rem;
+        padding: 12px 28px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .action-btn-large:hover {
+        background: linear-gradient(180deg, #F5DC6E 0%, #B8931A 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.7);
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        margin-top: auto;
+        padding-top: 14px;
+        font-size: 0.75rem;
+        color: #78614E;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-hieroglyphs"></div>
+
+    <div class="game-container" id="gameApp">
+      <!-- Top Navigation Header -->
+      <header id="mainHeader">
+        <div class="title-group">
+          <!-- Egyptian Pyramid & Eye Icon -->
+          <svg class="pyramid-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polygon points="12,2 2,22 22,22" fill="#D4AF37" stroke="#FCE881"/>
+            <polygon points="12,2 12,22 22,22" fill="#AA8717" stroke="#FCE881"/>
+            <circle cx="12" cy="14" r="2.5" fill="#1C1510" stroke="#FCE881" stroke-width="1"/>
+          </svg>
+          <div>
+            <h1 id="appTitle">MẬT MÃ GIẢI CỨU CỔ MỘ</h1>
+            <div class="subtitle">Escape Tomb - Toán Học Lớp 6: Dấu Hiệu Chia Hết</div>
+          </div>
+        </div>
+
+        <div class="header-controls">
+          <button class="icon-btn" id="btnSoundToggle" title="Bật/Tắt Âm Thanh" aria-label="Bật/Tắt Âm Thanh">
+            <svg id="iconSoundOn" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg id="iconSoundOff" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+          <button class="icon-btn" id="btnHelp" title="Hướng Dẫn Chơi" aria-label="Hướng Dẫn Chơi">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Expedition HUD Status Bar -->
+      <div class="hud-bar" id="hudBar">
+        <div class="hud-left">
+          <div class="hearts-container" id="heartsContainer" title="Sinh lực thám hiểm">
+            <div class="hearts-row">
+              <!-- 3 Hearts -->
+              <svg class="heart-icon alive" id="heart1" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <svg class="heart-icon alive" id="heart2" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <svg class="heart-icon alive" id="heart3" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+            <span class="lives-label" id="livesLabel">3 Mạng</span>
+          </div>
+        </div>
+
+        <div class="hud-center">
+          <div class="timer-wrapper" id="timerWrapper">
+            <div class="timer-display" id="timerDisplay">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span id="timerSeconds">60s</span>
+            </div>
+            <div class="timer-bar-bg">
+              <div class="timer-bar-fill" id="timerBarFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hud-right">
+          <div class="score-box" id="scoreBox">
+            <svg width="16" height="16" viewBox="0 0 24 24">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            <span id="scoreValue">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Stages Navigation Progress -->
+      <div class="stages-nav" id="stagesNav">
+        <!-- Stage 1 -->
+        <div class="stage-card active" id="stageTab0">
+          <div class="stage-title">Ải 1: Cổng Bùa Chú</div>
+          <div class="locks-row" id="locksRow0">
+            <div class="lock-pin current"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+          </div>
+        </div>
+        <!-- Stage 2 -->
+        <div class="stage-card" id="stageTab1">
+          <div class="stage-title">Ải 2: Đền Phép Thuật</div>
+          <div class="locks-row" id="locksRow1">
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+          </div>
+        </div>
+        <!-- Stage 3 -->
+        <div class="stage-card" id="stageTab2">
+          <div class="stage-title">Ải 3: Lăng Mộ Bậc Thầy</div>
+          <div class="locks-row" id="locksRow2">
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+          </div>
+        </div>
+        <!-- Stage 4 -->
+        <div class="stage-card" id="stageTab3">
+          <div class="stage-title">Ải 4: Bảo Vật Pharaoh</div>
+          <div class="locks-row" id="locksRow3">
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ancient Tomb Portal & Stone Gate -->
+      <div class="tomb-portal" id="tombPortal">
+        <!-- Torches on Sides -->
+        <div class="torch-wrapper torch-left">
+          <div class="torch-flame"></div>
+          <div class="torch-stand"></div>
+        </div>
+        <div class="torch-wrapper torch-right">
+          <div class="torch-flame"></div>
+          <div class="torch-stand"></div>
+        </div>
+
+        <!-- Portal Header -->
+        <div class="portal-header">
+          <div class="hieroglyphic-line">𓀀 𓋹 𓁐 𓊹 𓍯 𓎛 𓏏 𓐍 𓆃</div>
+          <div class="stage-badge" id="stageBadge">Ải 1: Dấu hiệu chia hết cho 2 và 5</div>
+        </div>
+
+        <!-- Stone Door with Question & Answers -->
+        <div class="stone-door" id="stoneDoor">
+          <div class="question-box">
+            <div class="question-num" id="questionNumText">CÂU HỎI 1.1 / 5</div>
+            <div class="question-text" id="questionContent">
+              Đang tải mật mã cổ thư...
+            </div>
+          </div>
+
+          <!-- 4 Answer Options -->
+          <div class="options-grid" id="optionsGrid">
+            <button class="option-btn" id="optBtn0">
+              <span class="opt-letter">A</span>
+              <span class="opt-content" id="optText0">-</span>
+            </button>
+            <button class="option-btn" id="optBtn1">
+              <span class="opt-letter">B</span>
+              <span class="opt-content" id="optText1">-</span>
+            </button>
+            <button class="option-btn" id="optBtn2">
+              <span class="opt-letter">C</span>
+              <span class="opt-content" id="optText2">-</span>
+            </button>
+            <button class="option-btn" id="optBtn3">
+              <span class="opt-letter">D</span>
+              <span class="opt-content" id="optText3">-</span>
+            </button>
+          </div>
+
+          <!-- Explanation / Feedback Banner -->
+          <div class="feedback-banner" id="feedbackBanner">
+            <div class="feedback-header">
+              <div class="feedback-title" id="feedbackTitle">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>CHÍNH XÁC!</span>
+              </div>
+              <span id="feedbackScore">+100 ĐIỂM</span>
+            </div>
+            <div class="feedback-text" id="feedbackText">
+              Lời giải thích cơ quan bẫy đá...
+            </div>
+            <button class="continue-btn" id="btnContinue">
+              <span>TIẾP TỤC GIẢI CỨU</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Amulets / Trợ giúp -->
+        <div class="amulets-section" id="amuletsSection">
+          <button class="amulet-btn" id="btnAmulet5050" title="Loại bỏ 2 phương án sai">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span class="amulet-name">Mắt Thần 50/50</span>
+            <span class="amulet-badge" id="count5050">2</span>
+          </button>
+
+          <button class="amulet-btn" id="btnAmuletScroll" title="Xem bí kíp quy tắc chia hết của Ải này">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2">
+              <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"></path>
+              <path d="M16 2v4"></path>
+              <path d="M8 2v4"></path>
+              <path d="M3 10h18"></path>
+            </svg>
+            <span class="amulet-name">Cuộn Giấy Cổ</span>
+            <span class="amulet-badge">Bí Kíp</span>
+          </button>
+        </div>
+      </div>
+
+      <footer>
+        MẬT MÃ GIẢI CỨU CỔ MỘ © TOÁN HỌC LỚP 6 — DẤU HIỆU CHIA HẾT
+      </footer>
+    </div>
+
+    <!-- MODAL: Cuộn Giấy Cổ (Papyrus Rules Scroll) -->
+    <div class="modal-overlay" id="scrollModal">
+      <div class="papyrus-scroll">
+        <div class="scroll-header">
+          <div class="scroll-title" id="scrollStageTitle">CUỘN GIẤY CỔ AI CẬP</div>
+          <div style="font-size: 0.85rem; color: #8B5A2B; font-style: italic;">Bí thuật số học lưu truyền ngàn năm của các Đại Tư Tế</div>
+        </div>
+        <div class="scroll-body" id="scrollContent">
+          <!-- Dynamic Content Based on Current Stage -->
+        </div>
+        <button class="modal-close-btn" id="btnCloseScroll">ĐÓNG CUỘN GIẤY</button>
+      </div>
+    </div>
+
+    <!-- MODAL: Hướng Dẫn & Cốt Truyện (Intro) -->
+    <div class="modal-overlay" id="introModal" style="display: flex;">
+      <div class="endgame-card">
+        <svg class="endgame-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
+          <polygon points="12,2 2,22 22,22" fill="#2C1810" stroke="#D4AF37"/>
+          <circle cx="12" cy="14" r="3" fill="#D4AF37"/>
+        </svg>
+        <h2 class="victory-title">CỐT TRUYỆN CỔ MỘ</h2>
+        <p class="endgame-desc">
+          Bạn là nhà thám hiểm toán học trẻ tuổi dũng cảm bước vào Lăng Mộ Vua Ramses. Để giải cứu kho báu cổ đại và thoát khỏi cơ quan sập, bạn phải vận dụng các <strong>Dấu hiệu chia hết lớp 6</strong> vượt qua 4 cánh cổng đá hiểm hóc!
+        </p>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-val">4 ẢI</span>
+            <span class="stat-label">Thử Thách</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val">60s</span>
+            <span class="stat-label">Thời Gian/Câu</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val">3 ❤️</span>
+            <span class="stat-label">Sinh Lực</span>
+          </div>
+        </div>
+        <button class="action-btn-large" id="btnStartGame">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span>BƯỚC VÀO CỔ MỘ</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL: Thất Bại (Game Over) -->
+    <div class="modal-overlay" id="gameOverModal">
+      <div class="endgame-card">
+        <svg class="endgame-icon" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="1.5">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <h2 class="defeat-title">CỬA ĐÁ SẬP XUỐNG!</h2>
+        <p class="endgame-desc" id="defeatReasonText">
+          Cơ quan cát lún đã kích hoạt, phong ấn lối thoát của nhà thám hiểm. Hãy hồi sinh để lĩnh hội lại bí thuật chia hết và giải cứu cổ mộ!
+        </p>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-val" id="finalScoreDefeat">0</span>
+            <span class="stat-label">Điểm Đạt Được</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val" id="finalSolvedDefeat">0/20</span>
+            <span class="stat-label">Chốt Đã Mở</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val" id="finalStageDefeat">Ải 1</span>
+            <span class="stat-label">Dừng Chân Tại</span>
+          </div>
+        </div>
+        <button class="action-btn-large" id="btnRestartDefeat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M23 4v6h-6"></path>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          <span>HỒI SINH ĐỂ THỬ LẠI</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL: Chiến Thắng (Victory) -->
+    <div class="modal-overlay" id="victoryModal">
+      <div class="endgame-card">
+        <!-- Golden Scarab / Pharaoh Crown Icon -->
+        <svg class="endgame-icon" viewBox="0 0 24 24" fill="#D4AF37">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <h2 class="victory-title">MỞ KHO BÁU PHARAOH!</h2>
+        <div style="font-family: 'Cinzel', serif; color: #10B981; font-weight: 700; font-size: 1.1rem; margin-bottom: 8px;">
+          DANH HIỆU: BẬC THẦY SỐ HỌC CỔ MỘ
+        </div>
+        <p class="endgame-desc">
+          Xuất sắc! Bạn đã giải mã toàn bộ 20 cơ quan cổ tự, chinh phục hoàn hảo các dấu hiệu chia hết cho 2, 5, 3, 9, 11 và 13! Kho báu vĩ đại của Pharaoh chính thức thuộc về bạn!
+        </p>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-val" id="finalScoreVictory">2000</span>
+            <span class="stat-label">Tổng Điểm</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val">20/20</span>
+            <span class="stat-label">Chốt Cơ Quan</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-val" id="finalLivesVictory">3 ❤️</span>
+            <span class="stat-label">Sinh Lực Còn</span>
+          </div>
+        </div>
+        <button class="action-btn-large" id="btnRestartVictory">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M23 4v6h-6"></path>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          <span>CHƠI LẠI TỪ ĐẦU</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- APPLICATION LOGIC & SOUND ENGINE -->
+    <script>
+      /* --- 1. GAME DATA: EXACT 20 QUESTIONS ACROSS 4 STAGES --- */
+      const STAGES = [
+        {
+          id: 1,
+          name: "Ải 1: Cổng Đá Bùa Chú",
+          desc: "Dấu hiệu chia hết cho 2 và 5 (Nhận biết chữ số tận cùng)",
+          ruleBook: `
+            <div class="rule-item">
+              <div class="rule-title">Dấu hiệu chia hết cho 2:</div>
+              <div>Các số có chữ số tận cùng là <strong>chữ số chẵn</strong> (0; 2; 4; 6; 8) thì chia hết cho 2 và chỉ những số đó mới chia hết cho 2.</div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-title">Dấu hiệu chia hết cho 5:</div>
+              <div>Các số có chữ số tận cùng là <strong>0 hoặc 5</strong> thì chia hết cho 5 và chỉ những số đó mới chia hết cho 5.</div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-title">Bí quyết mở khóa kép (Chia hết cho cả 2 và 5):</div>
+              <div>Chữ số tận cùng của số đó <strong>bắt buộc phải là chữ số 0</strong>!</div>
+            </div>
+          `,
+          questions: [
+            {
+              id: "1.1",
+              question: "Trong các số 1235; 1236; 1230; 1237, số nào mở được cơ quan khóa kép vì chia hết cho cả 2 và 5?",
+              options: ["1235", "1236", "1230", "1237"],
+              correctIndex: 2,
+              explanation: "Số chia hết cho cả 2 và 5 có chữ số tận cùng là 0. Do đó chọn số 1230."
+            },
+            {
+              id: "1.2",
+              question: "Cần thay chữ số x bằng chữ số nào để mật mã <span class='overline'>37x</span> là số lẻ chia hết cho 5?",
+              options: ["0", "5", "2", "8"],
+              correctIndex: 1,
+              explanation: "Số chia hết cho 5 có tận cùng là 0 hoặc 5. Vì đề bài yêu cầu số lẻ nên bắt buộc x = 5."
+            },
+            {
+              id: "1.3",
+              question: "Có bao nhiêu số có hai chữ số khác nhau chia hết cho cả 2 và 5?",
+              options: ["9 số", "10 số", "8 số", "5 số"],
+              correctIndex: 0,
+              explanation: "Các số có 2 chữ số chia hết cho cả 2 và 5 có tận cùng là 0: 10, 20, 30, ..., 90 (gồm 9 số, đều có 2 chữ số khác nhau)."
+            },
+            {
+              id: "1.4",
+              question: "Một túi ngọc có số viên ngọc là số tự nhiên từ 41 đến 59. Biết chia đều cho 2 người hay 5 người đều không thừa. Số ngọc trong túi là:",
+              options: ["45 viên", "50 viên", "55 viên", "52 viên"],
+              correctIndex: 1,
+              explanation: "Số ngọc vừa chia hết cho 2 vừa chia hết cho 5 nên tận cùng là 0. Trong khoảng 41 đến 59 chỉ có số 50."
+            },
+            {
+              id: "1.5",
+              question: "Tìm cặp chữ số (a, b) (a ≠ 0) để mật hiệu <span class='overline'>a25b</span> chia hết cho cả 2; 5 và tổng chữ số tận cùng bằng 0:",
+              options: [
+                "b = 0, a tùy ý từ 1 đến 9",
+                "b = 5, a = 2",
+                "b = 2, a = 0",
+                "Không có giá trị thỏa mãn"
+              ],
+              correctIndex: 0,
+              explanation: "Để chia hết cho cả 2 và 5 thì bắt buộc chữ số tận cùng b = 0. Khi đó chữ số đầu tiên a tùy ý từ 1 đến 9."
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: "Ải 2: Đền Thờ Phép Thuật",
+          desc: "Dấu hiệu chia hết cho 3 và 9 (Tính tổng các chữ số)",
+          ruleBook: `
+            <div class="rule-item">
+              <div class="rule-title">Dấu hiệu chia hết cho 3:</div>
+              <div>Các số có <strong>tổng các chữ số chia hết cho 3</strong> thì chia hết cho 3 và chỉ những số đó mới chia hết cho 3.</div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-title">Dấu hiệu chia hết cho 9:</div>
+              <div>Các số có <strong>tổng các chữ số chia hết cho 9</strong> thì chia hết cho 9 và chỉ những số đó mới chia hết cho 9.</div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-title">Mẹo phân biệt sống còn:</div>
+              <div>Số chia hết cho 9 luôn chia hết cho 3. Nhưng số chia hết cho 3 thì <em>chưa chắc</em> chia hết cho 9 (ví dụ: số 12 có tổng là 3)!</div>
+            </div>
+          `,
+          questions: [
+            {
+              id: "2.1",
+              question: "Trong các số 235; 345; 456; 567, số nào có tổng các chữ số chia hết cho 9?",
+              options: [
+                "235",
+                "345",
+                "456",
+                "567"
+              ],
+              correctIndex: 3,
+              explanation: "Số 567 có tổng các chữ số: 5 + 6 + 7 = 18 chia hết cho 9. (Các số 235 có tổng là 10; 345 có tổng là 12; 456 có tổng là 15 đều không chia hết cho 9)."
+            },
+            {
+              id: "2.2",
+              question: "Cần thay chữ số x bằng chữ số nào để mật mã <span class='overline'>12x</span> vừa là số chẵn vừa chia hết cho 3?",
+              options: ["x = 2", "x = 3", "x = 6", "x = 9"],
+              correctIndex: 2,
+              explanation: "Tổng 1 + 2 + x = 3 + x ⋮ 3 và x chẵn ∈ {0; 6}. Trong 4 đáp án cho sẵn, chọn x = 6."
+            },
+            {
+              id: "2.3",
+              question: "Tìm chữ số x để số <span class='overline'>5x2</span> mở được cánh cổng thứ hai (chia hết cho 9):",
+              options: ["x = 1", "x = 2", "x = 3", "x = 4"],
+              correctIndex: 1,
+              explanation: "Tổng các chữ số: 5 + x + 2 = 7 + x. Để 7 + x chia hết cho 9 thì x = 2."
+            },
+            {
+              id: "2.4",
+              question: "Giá trị nào của x làm cho số <span class='overline'>2x41</span> chia hết cho 3 nhưng KHÔNG chia hết cho 9?",
+              options: ["x = 5", "x = 2", "x = 3", "x = 7"],
+              correctIndex: 0,
+              explanation: "Với x = 5: tổng 2 + 5 + 4 + 1 = 12 (12 chia hết cho 3 nhưng không chia hết cho 9)."
+            },
+            {
+              id: "2.5",
+              question: "Tìm cặp chữ số (x, y) với x ≠ 0 để số <span class='overline'>x43y</span> chia hết cho cả 5 và 9:",
+              options: [
+                "(x, y) = (2, 0) hoặc (6, 5)",
+                "(x, y) = (5, 0) hoặc (2, 5)",
+                "(x, y) = (3, 0) hoặc (7, 5)",
+                "(x, y) = (1, 0) hoặc (4, 5)"
+              ],
+              correctIndex: 0,
+              explanation: "Chia hết cho 5 => y = 0 hoặc y = 5. Nếu y = 0 => x + 7 ⋮ 9 => x = 2. Nếu y = 5 => x + 12 ⋮ 9 => x = 6."
+            }
+          ]
+        },
+        {
+          id: 3,
+          name: "Ải 3: Lăng Mộ Bậc Thầy",
+          desc: "Dấu hiệu chia hết cho 11 (Hiệu xen kẽ chữ số hàng chẵn và lẻ)",
+          ruleBook: `
+            <div class="rule-item">
+              <div class="rule-title">Dấu hiệu chia hết cho 11:</div>
+              <div>Một số chia hết cho 11 khi và chỉ khi <strong>hiệu giữa Tổng các chữ số ở hàng lẻ và Tổng các chữ số ở hàng chẵn</strong> (tính từ phải sang trái hoặc trái sang phải) chia hết cho 11 (nghĩa là bằng 0, 11, 22...).</div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-title">Ví dụ minh họa:</div>
+              <div>Số 132: Tổng hàng lẻ là (1 + 2) = 3; hàng chẵn là 3. Hiệu: 3 - 3 = 0 ⋮ 11. Do đó 132 chia hết cho 11!</div>
+            </div>
+          `,
+          questions: [
+            {
+              id: "3.1",
+              question: "Trong các số sau, số nào chia hết cho 11?",
+              options: ["123", "132", "142", "152"],
+              correctIndex: 1,
+              explanation: "Số 132 có: (1 + 2) - 3 = 0, số 0 chia hết cho 11 nên 132 chia hết cho 11."
+            },
+            {
+              id: "3.2",
+              question: "Tìm chữ số x để số <span class='overline'>1x34</span> chia hết cho 11:",
+              options: ["x = 0", "x = 1", "x = 2", "x = 3"],
+              correctIndex: 0,
+              explanation: "Xét hiệu: (x + 4) - (1 + 3) = x + 4 - 4 = x. Để chia hết cho 11 thì chữ số x = 0."
+            },
+            {
+              id: "3.3",
+              question: "Tìm chữ số x để số <span class='overline'>7x12</span> chia hết cho 11:",
+              options: ["x = 4", "x = 5", "x = 6", "x = 7"],
+              correctIndex: 2,
+              explanation: "Tổng vị trí lẻ (2 + x), tổng vị trí chẵn (1 + 7) = 8. Hiệu: (x + 2) - 8 = x - 6 = 0 => x = 6."
+            },
+            {
+              id: "3.4",
+              question: "Cho số <span class='overline'>2a75</span>. Để số này chia hết cho 11, giá trị của a phải là:",
+              options: ["a = 1", "a = 3", "a = 4", "a = 0"],
+              correctIndex: 2,
+              explanation: "Ta có hiệu: (2 + 7) - (a + 5) = 9 - 5 - a = 4 - a. Để hiệu chia hết cho 11 thì a = 4."
+            },
+            {
+              id: "3.5",
+              question: "Cho số tự nhiên A = <span class='overline'>a8b1</span> (với a ≠ 0). Biết A chia hết cho cả 9 và 11. Giá trị của biểu thức a + b là:",
+              options: ["7", "8", "9", "11"],
+              correctIndex: 2,
+              explanation: "Vì A chia hết cho 9 nên tổng chữ số (a + 8 + b + 1) = a + b + 9 ⋮ 9 => a + b = 9."
+            }
+          ]
+        },
+        {
+          id: 4,
+          name: "Ải 4: Bảo Vật Pharaoh",
+          desc: "Dấu hiệu chia hết cho 13 (Quy tắc cắt đuôi x4 cộng phần còn lại & Toán tư duy)",
+          ruleBook: `
+            <div class="rule-item">
+              <div class="rule-title">Quy tắc chia hết cho 13 (Cắt đuôi nhân 4 cộng dồn):</div>
+              <div>Muốn kiểm tra một số có chia hết cho 13 hay không, ta <strong>cắt chữ số cuối cùng, nhân với 4, rồi đem cộng vào phần số còn lại</strong>. Lặp lại quá trình đó cho đến số nhỏ. Nếu kết quả chia hết cho 13 thì số ban đầu chia hết cho 13!</div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-title">Ví dụ minh họa:</div>
+              <div>Kiểm tra 247: Cắt số 7 nhân 4 = 28. Lấy 24 + 28 = 52. Vì 52 = 13 × 4 chia hết cho 13 nên 247 chia hết cho 13!</div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-title">Toán tư duy số mũ & chia hết:</div>
+              <div>Số dạng 10^k có dạng 100...0 (k chữ số 0). Khi cộng thêm số đơn vị, hãy tính tổng các chữ số và xét chữ số tận cùng!</div>
+            </div>
+          `,
+          questions: [
+            {
+              id: "4.1",
+              question: "Áp dụng quy tắc kiểm tra chia hết cho 13, trong các số sau số nào KHÔNG chia hết cho 13?",
+              options: ["117", "130", "143", "155"],
+              correctIndex: 3,
+              explanation: "155: lấy 15 + 5 × 4 = 35 (35 không chia hết cho 13). Các số khác: 11+28=39, 130, 14+12=26 đều chia hết cho 13."
+            },
+            {
+              id: "4.2",
+              question: "Tìm chữ số x để số <span class='overline'>24x1</span> chia hết cho 13:",
+              options: ["x = 3", "x = 1", "x = 2", "x = 4"],
+              correctIndex: 0,
+              explanation: "Với x = 3, số 2431: cắt 1 × 4 = 4; 243 + 4 = 247; cắt 7 × 4 = 28; 24 + 28 = 52 chia hết cho 13."
+            },
+            {
+              id: "4.3",
+              question: "Tìm các cặp chữ số (x, y) để số <span class='overline'>1x2y</span> chia hết cho cả 5 và 13:",
+              options: [
+                "(x, y) = (8, 0) hoặc (6, 5)",
+                "(x, y) = (2, 0) hoặc (5, 5)",
+                "(x, y) = (4, 0) hoặc (3, 5)",
+                "(x, y) = (1, 0) hoặc (7, 5)"
+              ],
+              correctIndex: 0,
+              explanation: "Chia hết cho 5 => y ∈ {0; 5}. Với y = 0: 1820 ÷ 13 = 140 (đúng). Với y = 5: 1625 ÷ 13 = 125 (đúng)."
+            },
+            {
+              id: "4.4",
+              question: "Cho số N = 10<sup>2026</sup> + 8. Giá trị của N chia hết cho số nào sau đây?",
+              options: [
+                "Chia hết cho cả 2 và 9 (tức chia hết cho 18)",
+                "Chia hết cho 5",
+                "Chỉ chia hết cho 3 nhưng không chia hết cho 9",
+                "Không chia hết cho 2"
+              ],
+              correctIndex: 0,
+              explanation: "N có tận cùng là 8 nên chia hết cho 2. Tổng chữ số của N là 1 + 0 + ... + 8 = 9 chia hết cho 9. Do đó N chia hết cho 18."
+            },
+            {
+              id: "4.5",
+              question: "Một mật mã cổ được mã hóa bằng biểu thức P = (2n + 9). Cần tìm số tự nhiên n nhỏ nhất để P chia hết cho (n + 2) nhằm vô hiệu hóa bẫy sập cuối cùng:",
+              options: ["n = 3", "n = 1", "n = 2", "n = 4"],
+              correctIndex: 0,
+              explanation: "2n + 9 = 2(n + 2) + 5. Để chia hết thì 5 ⋮ (n + 2) => n + 2 = 5 => n = 3."
+            }
+          ]
+        }
+      ];
+
+      /* --- 2. WEB AUDIO API SYNTHESIZER (ZERO EXTERNAL ASSETS) --- */
+      class SoundController {
+        constructor() {
+          this.ctx = null;
+          this.enabled = true;
+        }
+
+        init() {
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+              this.ctx = new AudioCtx();
+            }
+          }
+          if (this.ctx && this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+        }
+
+        play(type) {
+          if (!this.enabled) return;
+          this.init();
+          if (!this.ctx) return;
+
+          const now = this.ctx.currentTime;
+
+          switch(type) {
+            case 'click': {
+              const osc = this.ctx.createOscillator();
+              const gain = this.ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(600, now);
+              osc.frequency.exponentialRampToValueAtTime(150, now + 0.05);
+              gain.gain.setValueAtTime(0.2, now);
+              gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
+              osc.connect(gain);
+              gain.connect(this.ctx.destination);
+              osc.start(now);
+              osc.stop(now + 0.05);
+              break;
+            }
+
+            case 'correct': {
+              // Ancient Golden Pentatonic Chime (D5 -> F5 -> A5 -> D6)
+              const notes = [587.33, 698.46, 880.00, 1174.66];
+              notes.forEach((freq, idx) => {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                const startTime = now + idx * 0.09;
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, startTime);
+                gain.gain.setValueAtTime(0, startTime);
+                gain.gain.linearRampToValueAtTime(0.25, startTime + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.55);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(startTime);
+                osc.stop(startTime + 0.6);
+              });
+              break;
+            }
+
+            case 'wrong': {
+              // Deep Stone Trap Descent & Discordant Rumble
+              const osc1 = this.ctx.createOscillator();
+              const osc2 = this.ctx.createOscillator();
+              const gain = this.ctx.createGain();
+
+              osc1.type = 'sawtooth';
+              osc2.type = 'triangle';
+              osc1.frequency.setValueAtTime(160, now);
+              osc1.frequency.exponentialRampToValueAtTime(65, now + 0.45);
+              osc2.frequency.setValueAtTime(140, now);
+              osc2.frequency.exponentialRampToValueAtTime(55, now + 0.45);
+
+              gain.gain.setValueAtTime(0.3, now);
+              gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+
+              osc1.connect(gain);
+              osc2.connect(gain);
+              gain.connect(this.ctx.destination);
+
+              osc1.start(now);
+              osc2.start(now);
+              osc1.stop(now + 0.5);
+              osc2.stop(now + 0.5);
+              break;
+            }
+
+            case 'quake': {
+              // Low-frequency rumble when stone gate slides
+              const osc = this.ctx.createOscillator();
+              const gain = this.ctx.createGain();
+              osc.type = 'square';
+              osc.frequency.setValueAtTime(60, now);
+              osc.frequency.linearRampToValueAtTime(45, now + 0.5);
+
+              gain.gain.setValueAtTime(0.18, now);
+              gain.gain.linearRampToValueAtTime(0.01, now + 0.5);
+
+              osc.connect(gain);
+              gain.connect(this.ctx.destination);
+              osc.start(now);
+              osc.stop(now + 0.5);
+              break;
+            }
+
+            case 'tick': {
+              const osc = this.ctx.createOscillator();
+              const gain = this.ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(900, now);
+              gain.gain.setValueAtTime(0.08, now);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+              osc.connect(gain);
+              gain.connect(this.ctx.destination);
+              osc.start(now);
+              osc.stop(now + 0.03);
+              break;
+            }
+
+            case 'fanfare': {
+              // Victory Egyptian Triumphal Fanfare
+              const chords = [
+                { f: 440.0, d: 0.15, t: 0 },
+                { f: 554.37, d: 0.15, t: 0.15 },
+                { f: 659.25, d: 0.2, t: 0.3 },
+                { f: 880.0, d: 0.5, t: 0.5 }
+              ];
+              chords.forEach(c => {
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                const st = now + c.t;
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(c.f, st);
+                gain.gain.setValueAtTime(0.3, st);
+                gain.gain.exponentialRampToValueAtTime(0.001, st + c.d);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(st);
+                osc.stop(st + c.d);
+              });
+              break;
+            }
+          }
+        }
+      }
+
+      const sounds = new SoundController();
+
+      /* --- 3. GAME STATE --- */
+      let currentStageIndex = 0;
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let lives = 3;
+      let timerInterval = null;
+      let timeLeft = 60;
+      let hasAnsweredCurrent = false;
+      let amulets = {
+        fiftyFiftyCount: 2
+      };
+      let solvedTotal = 0;
+
+      /* --- 4. DOM ELEMENTS --- */
+      const heart1 = document.getElementById('heart1');
+      const heart2 = document.getElementById('heart2');
+      const heart3 = document.getElementById('heart3');
+      const scoreValue = document.getElementById('scoreValue');
+      const timerDisplay = document.getElementById('timerDisplay');
+      const timerSeconds = document.getElementById('timerSeconds');
+      const timerBarFill = document.getElementById('timerBarFill');
+      const timerWrapper = document.getElementById('timerWrapper');
+
+      const stageBadge = document.getElementById('stageBadge');
+      const stoneDoor = document.getElementById('stoneDoor');
+      const questionNumText = document.getElementById('questionNumText');
+      const questionContent = document.getElementById('questionContent');
+      const optionsGrid = document.getElementById('optionsGrid');
+      const optButtons = [
+        document.getElementById('optBtn0'),
+        document.getElementById('optBtn1'),
+        document.getElementById('optBtn2'),
+        document.getElementById('optBtn3')
+      ];
+      const optTexts = [
+        document.getElementById('optText0'),
+        document.getElementById('optText1'),
+        document.getElementById('optText2'),
+        document.getElementById('optText3')
+      ];
+
+      const feedbackBanner = document.getElementById('feedbackBanner');
+      const feedbackTitle = document.getElementById('feedbackTitle');
+      const feedbackScore = document.getElementById('feedbackScore');
+      const feedbackText = document.getElementById('feedbackText');
+      const btnContinue = document.getElementById('btnContinue');
+
+      const btnAmulet5050 = document.getElementById('btnAmulet5050');
+      const count5050 = document.getElementById('count5050');
+      const btnAmuletScroll = document.getElementById('btnAmuletScroll');
+
+      const scrollModal = document.getElementById('scrollModal');
+      const scrollStageTitle = document.getElementById('scrollStageTitle');
+      const scrollContent = document.getElementById('scrollContent');
+      const btnCloseScroll = document.getElementById('btnCloseScroll');
+
+      const introModal = document.getElementById('introModal');
+      const btnStartGame = document.getElementById('btnStartGame');
+
+      const gameOverModal = document.getElementById('gameOverModal');
+      const btnRestartDefeat = document.getElementById('btnRestartDefeat');
+      const finalScoreDefeat = document.getElementById('finalScoreDefeat');
+      const finalSolvedDefeat = document.getElementById('finalSolvedDefeat');
+      const finalStageDefeat = document.getElementById('finalStageDefeat');
+      const defeatReasonText = document.getElementById('defeatReasonText');
+
+      const victoryModal = document.getElementById('victoryModal');
+      const btnRestartVictory = document.getElementById('btnRestartVictory');
+      const finalScoreVictory = document.getElementById('finalScoreVictory');
+      const finalLivesVictory = document.getElementById('finalLivesVictory');
+
+      const btnSoundToggle = document.getElementById('btnSoundToggle');
+      const iconSoundOn = document.getElementById('iconSoundOn');
+      const iconSoundOff = document.getElementById('iconSoundOff');
+      const btnHelp = document.getElementById('btnHelp');
+
+      /* --- 5. CORE GAME FUNCTIONS --- */
+
+      function startGame() {
+        introModal.style.display = 'none';
+        gameOverModal.style.display = 'none';
+        victoryModal.style.display = 'none';
+        scrollModal.style.display = 'none';
+
+        currentStageIndex = 0;
+        currentQuestionIndex = 0;
+        score = 0;
+        lives = 3;
+        solvedTotal = 0;
+        amulets.fiftyFiftyCount = 2;
+
+        updateLivesUI();
+        updateScoreUI();
+        updateAmuletsUI();
+        resetStageProgressIndicators();
+        loadQuestion(currentStageIndex, currentQuestionIndex);
+      }
+
+      function loadQuestion(stageIdx, qIdx) {
+        hasAnsweredCurrent = false;
+        clearInterval(timerInterval);
+
+        const stage = STAGES[stageIdx];
+        const q = stage.questions[qIdx];
+
+        // Update Header & Badge
+        stageBadge.innerText = `${stage.name} - ${stage.desc}`;
+        questionNumText.innerText = `ẢI ${stage.id} — CÂU HỎI ${qIdx + 1} / 5 (MẬT MÃ #${q.id})`;
+        questionContent.innerHTML = q.question;
+
+        // Reset Stone Door Visuals
+        stoneDoor.classList.remove('glow-green', 'glow-red', 'quake-door');
+        feedbackBanner.style.display = 'none';
+
+        // Load 4 Options
+        q.options.forEach((optText, i) => {
+          const btn = optButtons[i];
+          btn.disabled = false;
+          btn.classList.remove('correct', 'wrong', 'eliminated');
+          optTexts[i].innerHTML = optText;
+        });
+
+        // Update 4 Stage Card Selection
+        for (let s = 0; s < 4; s++) {
+          const card = document.getElementById(`stageTab${s}`);
+          if (s === stageIdx) {
+            card.className = 'stage-card active';
+          } else if (s < stageIdx) {
+            card.className = 'stage-card completed';
+          } else {
+            card.className = 'stage-card';
+          }
+        }
+
+        // Update Pins in Current Stage
+        updateLockPinsUI();
+
+        // Enable 50/50 button if charges left
+        btnAmulet5050.disabled = amulets.fiftyFiftyCount <= 0;
+
+        // Start 60-Second Countdown
+        startTimer();
+      }
+
+      function startTimer() {
+        timeLeft = 60;
+        timerSeconds.innerText = `${timeLeft}s`;
+        timerBarFill.style.width = '100%';
+        timerWrapper.classList.remove('timer-warning');
+
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          timerSeconds.innerText = `${timeLeft}s`;
+          const pct = Math.max(0, (timeLeft / 60) * 100);
+          timerBarFill.style.width = `${pct}%`;
+
+          if (timeLeft <= 10 && timeLeft > 0) {
+            timerWrapper.classList.add('timer-warning');
+            sounds.play('tick');
+          }
+
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            handleTimeout();
+          }
+        }, 1000);
+      }
+
+      function handleAnswer(selectedIndex) {
+        if (hasAnsweredCurrent) return;
+        hasAnsweredCurrent = true;
+        clearInterval(timerInterval);
+
+        const currentStage = STAGES[currentStageIndex];
+        const currentQ = currentStage.questions[currentQuestionIndex];
+        const isCorrect = selectedIndex === currentQ.correctIndex;
+
+        // Lock all options
+        optButtons.forEach(btn => btn.disabled = true);
+
+        if (isCorrect) {
+          // --- CORRECT ANSWER ---
+          score += 100;
+          solvedTotal++;
+          updateScoreUI();
+
+          // Visuals & Sound
+          optButtons[selectedIndex].classList.add('correct');
+          stoneDoor.classList.add('quake-door', 'glow-green');
+          sounds.play('correct');
+          sounds.play('quake');
+
+          // Unlock mechanism pin
+          markLockPinSolved(currentStageIndex, currentQuestionIndex);
+
+          // Show Success Feedback (Max 2 lines as specified)
+          feedbackBanner.className = 'feedback-banner success';
+          feedbackTitle.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>VÔ HIỆU HÓA BẪY THÀNH CÔNG!</span>
+          `;
+          feedbackScore.innerText = '+100 ĐIỂM';
+          feedbackText.innerHTML = currentQ.explanation;
+          btnContinue.innerHTML = `<span>TIẾP TỤC BƯỚC VÀO CỔ MỘ</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+          feedbackBanner.style.display = 'block';
+
+        } else {
+          // --- WRONG ANSWER ---
+          lives--;
+          updateLivesUI();
+
+          // Visuals & Sound
+          optButtons[selectedIndex].classList.add('wrong');
+          optButtons[currentQ.correctIndex].classList.add('correct');
+          stoneDoor.classList.add('quake-door', 'glow-red');
+          sounds.play('wrong');
+
+          // Show Danger Feedback with divisibility hint to help review rule
+          feedbackBanner.className = 'feedback-banner danger';
+          feedbackTitle.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span>BẪY CÁT LÚN TỤT XUỐNG! (MẤT 1 MẠNG)</span>
+          `;
+          feedbackScore.innerText = `CÒN ${lives} MẠNG`;
+          feedbackText.innerHTML = `<strong>Gợi ý quy tắc:</strong> ${currentQ.explanation}`;
+          btnContinue.innerHTML = `<span>TIẾP TỤC HÀNH TRÌNH</span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+          feedbackBanner.style.display = 'block';
+
+          if (lives <= 0) {
+            setTimeout(() => {
+              triggerGameOver("Bạn đã cạn kiệt sinh lực trước những cạm bẫy cơ quan của lăng mộ!");
+            }, 1200);
+            return;
+          }
+        }
+      }
+
+      function handleTimeout() {
+        if (hasAnsweredCurrent) return;
+        hasAnsweredCurrent = true;
+
+        lives--;
+        updateLivesUI();
+        sounds.play('wrong');
+        stoneDoor.classList.add('quake-door', 'glow-red');
+
+        const currentStage = STAGES[currentStageIndex];
+        const currentQ = currentStage.questions[currentQuestionIndex];
+
+        optButtons.forEach(btn => btn.disabled = true);
+        optButtons[currentQ.correctIndex].classList.add('correct');
+
+        feedbackBanner.className = 'feedback-banner danger';
+        feedbackTitle.innerHTML = `<span>HẾT GIỜ! BẪY CÁT SẬP XUỐNG! (MẤT 1 MẠNG)</span>`;
+        feedbackScore.innerText = `CÒN ${lives} MẠNG`;
+        feedbackText.innerHTML = `<strong>Quy tắc cần nhớ:</strong> ${currentQ.explanation}`;
+        btnContinue.innerHTML = `<span>TIẾP TỤC HÀNH TRÌNH</span>`;
+        feedbackBanner.style.display = 'block';
+
+        if (lives <= 0) {
+          setTimeout(() => {
+            triggerGameOver("Hết thời gian 60 giây và cạn kiệt sinh lực!");
+          }, 1200);
+        }
+      }
+
+      function advanceNextStep() {
+        sounds.play('click');
+        if (lives <= 0) return;
+
+        currentQuestionIndex++;
+        if (currentQuestionIndex >= 5) {
+          // Stage cleared! Move to next stage or Victory!
+          currentStageIndex++;
+          currentQuestionIndex = 0;
+
+          if (currentStageIndex >= 4) {
+            // ALL 4 STAGES CLEARED -> VICTORY!
+            triggerVictory();
+            return;
+          } else {
+            // Stage Transition: Give 1 extra 50/50 use as reward!
+            if (amulets.fiftyFiftyCount < 3) {
+              amulets.fiftyFiftyCount++;
+              updateAmuletsUI();
+            }
+          }
+        }
+
+        loadQuestion(currentStageIndex, currentQuestionIndex);
+      }
+
+      /* --- 6. AMULETS LOGIC (BÙA HỘ MỆNH) --- */
+
+      function useFiftyFifty() {
+        if (hasAnsweredCurrent || amulets.fiftyFiftyCount <= 0) return;
+
+        sounds.play('click');
+        const currentQ = STAGES[currentStageIndex].questions[currentQuestionIndex];
+        const correct = currentQ.correctIndex;
+
+        // Pick 2 wrong options to eliminate
+        const wrongIndices = [0, 1, 2, 3].filter(idx => idx !== correct);
+        // Shuffle wrong indices
+        for (let i = wrongIndices.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [wrongIndices[i], wrongIndices[j]] = [wrongIndices[j], wrongIndices[i]];
+        }
+
+        // Eliminate 2 wrong choices
+        optButtons[wrongIndices[0]].classList.add('eliminated');
+        optButtons[wrongIndices[0]].disabled = true;
+        optButtons[wrongIndices[1]].classList.add('eliminated');
+        optButtons[wrongIndices[1]].disabled = true;
+
+        amulets.fiftyFiftyCount--;
+        updateAmuletsUI();
+      }
+
+      function openScrollModal() {
+        sounds.play('click');
+        const currentStage = STAGES[currentStageIndex];
+        scrollStageTitle.innerText = `BÍ KÍP: ${currentStage.name.toUpperCase()}`;
+        scrollContent.innerHTML = currentStage.ruleBook;
+        scrollModal.style.display = 'flex';
+      }
+
+      function closeScrollModal() {
+        sounds.play('click');
+        scrollModal.style.display = 'none';
+      }
+
+      /* --- 7. END GAME MODALS (VICTORY & DEFEAT) --- */
+
+      function triggerVictory() {
+        clearInterval(timerInterval);
+        sounds.play('fanfare');
+
+        finalScoreVictory.innerText = score;
+        finalLivesVictory.innerText = `${lives} ❤️`;
+        victoryModal.style.display = 'flex';
+      }
+
+      function triggerGameOver(reason) {
+        clearInterval(timerInterval);
+        defeatReasonText.innerText = reason;
+        finalScoreDefeat.innerText = score;
+        finalSolvedDefeat.innerText = `${solvedTotal}/20`;
+        finalStageDefeat.innerText = `Ải ${currentStageIndex + 1}`;
+        gameOverModal.style.display = 'flex';
+      }
+
+      /* --- 8. UI HELPERS --- */
+
+      function updateLivesUI() {
+        const hearts = [heart1, heart2, heart3];
+        hearts.forEach((h, index) => {
+          if (!h) return;
+          if (index < lives) {
+            h.setAttribute('class', 'heart-icon alive');
+            h.classList.remove('broken');
+            h.classList.add('alive');
+          } else {
+            h.setAttribute('class', 'heart-icon broken');
+            h.classList.remove('alive');
+            h.classList.add('broken');
+          }
+        });
+        const livesLabelEl = document.getElementById('livesLabel');
+        if (livesLabelEl) {
+          livesLabelEl.innerText = `${Math.max(0, lives)} Mạng`;
+        }
+      }
+
+      function updateScoreUI() {
+        scoreValue.innerText = score;
+      }
+
+      function updateAmuletsUI() {
+        count5050.innerText = amulets.fiftyFiftyCount;
+        btnAmulet5050.disabled = amulets.fiftyFiftyCount <= 0 || hasAnsweredCurrent;
+      }
+
+      function resetStageProgressIndicators() {
+        for (let s = 0; s < 4; s++) {
+          const row = document.getElementById(`locksRow${s}`);
+          row.innerHTML = `
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+            <div class="lock-pin"></div>
+          `;
+        }
+      }
+
+      function updateLockPinsUI() {
+        const row = document.getElementById(`locksRow${currentStageIndex}`);
+        const pins = row.querySelectorAll('.lock-pin');
+        pins.forEach((pin, idx) => {
+          if (idx < currentQuestionIndex) {
+            pin.className = 'lock-pin unlocked';
+          } else if (idx === currentQuestionIndex) {
+            pin.className = 'lock-pin current';
+          } else {
+            pin.className = 'lock-pin';
+          }
+        });
+      }
+
+      function markLockPinSolved(sIdx, qIdx) {
+        const row = document.getElementById(`locksRow${sIdx}`);
+        const pins = row.querySelectorAll('.lock-pin');
+        if (pins[qIdx]) {
+          pins[qIdx].className = 'lock-pin unlocked';
+        }
+      }
+
+      /* --- 9. EVENT LISTENERS --- */
+
+      optButtons.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+          sounds.play('click');
+          handleAnswer(idx);
+        });
+      });
+
+      btnContinue.addEventListener('click', advanceNextStep);
+
+      btnAmulet5050.addEventListener('click', useFiftyFifty);
+      btnAmuletScroll.addEventListener('click', openScrollModal);
+      btnCloseScroll.addEventListener('click', closeScrollModal);
+
+      btnStartGame.addEventListener('click', () => {
+        sounds.init();
+        sounds.play('click');
+        startGame();
+      });
+
+      btnRestartDefeat.addEventListener('click', () => {
+        sounds.play('click');
+        startGame();
+      });
+
+      btnRestartVictory.addEventListener('click', () => {
+        sounds.play('click');
+        startGame();
+      });
+
+      btnHelp.addEventListener('click', () => {
+        sounds.play('click');
+        introModal.style.display = 'flex';
+      });
+
+      btnSoundToggle.addEventListener('click', () => {
+        sounds.enabled = !sounds.enabled;
+        if (sounds.enabled) {
+          iconSoundOn.style.display = 'block';
+          iconSoundOff.style.display = 'none';
+          sounds.play('click');
+        } else {
+          iconSoundOn.style.display = 'none';
+          iconSoundOff.style.display = 'block';
+        }
+      });
+
+      // Close scroll modal on backdrop click
+      scrollModal.addEventListener('click', (e) => {
+        if (e.target === scrollModal) {
+          closeScrollModal();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Mật Mã Giải Cứu Cổ Mộ",
+  "description": "Trò chơi toán học tương tác vượt 4 ải cổ mộ Ai Cập chinh phục các dấu hiệu chia hết cho 2, 5, 3, 9, 11 và 13 dành cho học sinh lớp 6.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
